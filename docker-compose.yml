@@ -1,0 +1,36 @@
+#version: "3"
+#services:
+#  my_service:
+#    image: my:image
+#    volumes:
+#      - type: volume
+#        source: volume-name
+#        target: /path/in/container
+#        read_only: true
+#volumes:
+#  volume-name:
+
+version: "3.2"
+services:
+  minecraft:
+#    image: minecraft:latest
+    build:
+      context: .
+#      network: "host"
+    image: minecraft-server:latest
+    ports:
+      - "25565:25565"
+      - "25575:25575"
+    volumes:
+      - type: bind
+        source: /home/ark/PycharmProjects/docker-minecraft/server
+        target: /minecraft/server
+        read_only: true
+
+    command: java -Xmx1024M -Xms1024M -jar ./server/server.1.16.1.jar nogui
+#    command: cat server/eula.txt
+#    volumes:
+#      - type: bind
+#        source: ./server
+#        target: /minecraft/server
+##        read_only: false
